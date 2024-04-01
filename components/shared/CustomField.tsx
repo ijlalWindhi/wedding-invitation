@@ -8,7 +8,7 @@ import {
   FormMessage,
   FormLabel,
 } from "../ui/form";
-import { formSchema } from "@/components/pages/add-visitor/ModalAddVisitor";
+import { formSchema } from "@/components/pages/add-visitor/ModalVisitor";
 
 type CustomFieldProps = {
   control: Control<z.infer<typeof formSchema>> | undefined;
@@ -31,7 +31,9 @@ export const CustomField = ({
       name={name}
       render={({ field }) => (
         <FormItem className={className}>
-          {formLabel && <FormLabel>{formLabel}</FormLabel>}
+          {formLabel && (
+            <FormLabel className="text-white">{formLabel}</FormLabel>
+          )}
           <FormControl>{render({ field })}</FormControl>
           <FormMessage />
         </FormItem>
