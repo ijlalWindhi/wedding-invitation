@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Info, Trash, PlusCircle, Edit2 } from "lucide-react";
 import {
   Table,
@@ -55,7 +56,7 @@ const AddVisitor = () => {
     setVisitors,
     setTmpVisitors,
   } = useVisitorStore();
-  const itemsPerPage = 15;
+  const itemsPerPage = 10;
   const totalPages = Math.ceil(visitors.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -208,9 +209,11 @@ const AddVisitor = () => {
                 <TableCell>{visitor.session}</TableCell>
                 <TableCell>{visitor.numberOfVisitor}</TableCell>
                 <TableCell className="flex items-center justify-center gap-2">
-                  <Button variant="outline" size="icon">
-                    <Info className="h-4 w-4" />
-                  </Button>
+                  <Link href={`/admin/add-visitor/${visitor.uuid}`}>
+                    <Button variant="outline" size="icon">
+                      <Info className="h-4 w-4" />
+                    </Button>
+                  </Link>
                   <Button variant="outline" size="icon">
                     <Edit2
                       className="h-4 w-4"
