@@ -59,13 +59,13 @@ function DetailVisitor() {
       />
     </div>
   ) : (
-    <main className="text-white p-4 flex flex-col gap-4 font-poppins">
+    <main className="text-white p-4 sm:p-6 md:p-10 flex flex-col gap-4 font-poppins">
       <Link href="/admin/add-visitor" className="flex gap-2 items-center">
         <ChevronLeft className="w-6 h-6" />
         <h1 className="text-white font-semibold text-lg">Kembali</h1>
       </Link>
       <h1 className="text-2xl font-bold">Detail Tamu</h1>
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="flex flex-col gap-2">
           <h2 className="text-md font-medium">Nama</h2>
           <p className="border rounded-md p-2">{visitor.name}</p>
