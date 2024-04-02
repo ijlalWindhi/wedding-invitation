@@ -22,13 +22,13 @@ function QrCode({
     }
   };
   return (
-    <div className="flex items-start gap-4">
+    <div className="flex flex-wrap items-start gap-4">
       <QRCode
         value={url}
         size={230}
-        logoImage="https://res.cloudinary.com/dhhyqadco/image/upload/v1712069743/wedding_invitation_sherly_rizki.jpg"
-        logoHeight={100}
-        logoWidth={100}
+        logoImage="https://res.cloudinary.com/dhhyqadco/image/upload/v1712070682/wedding_invitation_sherly_rizki.jpg"
+        logoHeight={60}
+        logoWidth={60}
         logoOpacity={1}
         logoPadding={1}
         enableCORS={true}
