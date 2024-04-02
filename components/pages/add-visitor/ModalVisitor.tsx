@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -24,7 +24,7 @@ import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import { defaultValues, sessionOptions, categoryOptions } from "@/constants";
 import { sessionOptionKey, categoryOptionKey } from "@/lib/utils";
-import { addVisitor } from "@/lib/actions/visitor.action";
+import { setVisitor } from "@/lib/actions/visitor.action";
 import { useVisitorStore } from "@/store/visitor";
 
 // form schema
@@ -62,9 +62,9 @@ function ModalVisitor({ fetchAllVisitors }: any) {
       setIsSubmitting(true);
       const data = {
         ...values,
-        uuid: uuidv4(),
+        uuid: selectedVisitor.uuid ? selectedVisitor.uuid : uuidv4(),
       };
-      await addVisitor({ data, path: "/admin/add-visitor", uuid: data.uuid });
+      await setVisitor({ data, path: "/admin/add-visitor", uuid: data.uuid });
       await fetchAllVisitors();
       handleCloseModal();
     } catch (error) {
@@ -78,6 +78,17 @@ function ModalVisitor({ fetchAllVisitors }: any) {
     setSelectedVisitor({} as VisitorData);
     form.reset();
   };
+
+  // lifecycle
+  useEffect(() => {
+    if (selectedVisitor) {
+      form.setValue("name", selectedVisitor.name);
+      form.setValue("address", selectedVisitor.address);
+      form.setValue("category", selectedVisitor.category);
+      form.setValue("session", selectedVisitor.session);
+      form.setValue("numberOfVisitor", selectedVisitor.numberOfVisitor);
+    }
+  }, [selectedVisitor, form]);
 
   return (
     <Dialog open={isOpenModal} onOpenChange={handleCloseModal}>
