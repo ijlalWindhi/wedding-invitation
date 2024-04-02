@@ -94,7 +94,7 @@ function ModalVisitor({ fetchAllVisitors }: any) {
     <Dialog open={isOpenModal} onOpenChange={handleCloseModal}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Tambah Pengunjung</DialogTitle>
+          <DialogTitle>Tambah Tamu</DialogTitle>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CustomField
@@ -172,7 +172,7 @@ function ModalVisitor({ fetchAllVisitors }: any) {
               <CustomField
                 control={form.control}
                 name="numberOfVisitor"
-                formLabel="Total Pengunjung"
+                formLabel="Total Tamu"
                 className="w-full"
                 render={({ field }) => (
                   <Input {...field} placeholder="Jumlah Tamu" type="number" />
