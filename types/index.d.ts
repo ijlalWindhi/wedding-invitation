@@ -9,7 +9,7 @@ declare type VisitorData = {
 
 declare type Visitors = VisitorData[];
 
-declare type AddVisitorProps = {
+declare type SetVisitorProps = {
   data: VisitorData;
   path: string;
   uuid: string;
