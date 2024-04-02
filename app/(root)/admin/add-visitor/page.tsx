@@ -108,8 +108,10 @@ const AddVisitor = () => {
             className="bg-secondary border-primary"
             onChange={(e) => {
               const keyword = e.target.value.toLowerCase();
-              const filterData = tmpVisitors.filter((visitor) =>
-                visitor.name.toLowerCase().includes(keyword)
+              const filterData = tmpVisitors.filter(
+                (visitor) =>
+                  visitor.name.toLowerCase().includes(keyword) ||
+                  visitor.address.toLowerCase().includes(keyword)
               );
               setVisitors(filterData);
             }}
