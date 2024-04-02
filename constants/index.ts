@@ -46,8 +46,12 @@ export const categoryOptions = {
     label: "Bogo",
     value: 6,
   },
+  cahaya: {
+    label: "Cahaya",
+    value: 7,
+  },
   umum: {
     label: "Umum",
-    value: 7,
+    value: 8,
   },
 };
