@@ -21,7 +21,7 @@ export async function getAllVisitor() {
   }
 }
 
-export async function addVisitor({ data, path, uuid }: AddVisitorProps) {
+export async function setVisitor({ data, path, uuid }: SetVisitorProps) {
   try {
     const visitor = await setDoc(doc(db, "visitor", uuid), data);
     await setDoc(doc(db, "visitor_backup", uuid), data);
@@ -35,7 +35,6 @@ export async function addVisitor({ data, path, uuid }: AddVisitorProps) {
 export async function deleteVisitor(uuid: string) {
   try {
     await deleteDoc(doc(db, "visitor", uuid));
-    await deleteDoc(doc(db, "visitor_backup", uuid));
     revalidatePath("/admin/add-visitor");
   } catch (error) {
     handleError(error);
