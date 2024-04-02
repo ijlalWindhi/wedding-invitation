@@ -19,6 +19,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import ModalAddVisitor from "@/components/pages/add-visitor/ModalVisitor";
 import ModalDeleteVisitor from "@/components/pages/add-visitor/ModalDeleteVisitor";
 import { getAllVisitor } from "@/lib/actions/visitor.action";
@@ -30,16 +31,19 @@ import NoData from "@/public/animation/no_data.json";
 
 const AddVisitor = () => {
   // state & variable
-  const [visitors, setVisitors] = useState<Visitors>([]);
   const [isGetData, setIsGetData] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState(1);
   const {
+    visitors,
+    tmpVisitors,
     isOpenModal,
     isOpenModalDelete,
     setIsOpenModal,
     setIsOpenModalDelete,
     setSelectedUuidVisitor,
     setSelectedVisitor,
+    setVisitors,
+    setTmpVisitors,
   } = useVisitorStore();
   const itemsPerPage = 15;
   const totalPages = Math.ceil(visitors.length / itemsPerPage);
@@ -51,7 +55,7 @@ const AddVisitor = () => {
     try {
       setIsGetData(true);
       const response = await getAllVisitor();
-      setVisitors(
+      const data =
         response?.map((doc) => ({
           uuid: doc.uuid,
           name: doc.name,
@@ -59,8 +63,9 @@ const AddVisitor = () => {
           category: doc.category,
           session: doc.session,
           numberOfVisitor: doc.numberOfVisitor,
-        })) || []
-      );
+        })) || [];
+      setVisitors(data);
+      setTmpVisitors(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -97,14 +102,27 @@ const AddVisitor = () => {
       <ModalDeleteVisitor fetchAllVisitors={fetchAllVisitors} />
       <div className="flex justify-between gap-4 flex-wrap">
         <h1 className="font-semibold text-xl">Data Tamu Pernikahan</h1>
-        <Button
-          onClick={() => {
-            setIsOpenModal(!isOpenModal);
-          }}
-        >
-          Tambah Tamu
-          <PlusCircle className="ml-2 h-4 w-4" />
-        </Button>
+        <div className="flex items-center gap-4">
+          <Input
+            placeholder="Cari Tamu"
+            className="bg-secondary border-primary"
+            onChange={(e) => {
+              const keyword = e.target.value.toLowerCase();
+              const filterData = tmpVisitors.filter((visitor) =>
+                visitor.name.toLowerCase().includes(keyword)
+              );
+              setVisitors(filterData);
+            }}
+          />
+          <Button
+            onClick={() => {
+              setIsOpenModal(!isOpenModal);
+            }}
+          >
+            Tambah Tamu
+            <PlusCircle className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
       </div>
       {visitors.length === 0 ? (
         <div className="w-full min-h-[85vh] flex items-center md:w-3/4 lg:w-1/2 xl:w-1/4 self-center">
@@ -136,7 +154,7 @@ const AddVisitor = () => {
                 <TableCell>
                   {numberPagination({ currentPage, itemsPerPage, index })}
                 </TableCell>
-                <TableCell>{visitor.name}</TableCell>
+                <TableCell className="!text-left">{visitor.name}</TableCell>
                 <TableCell>{visitor.address}</TableCell>
                 <TableCell>{visitor.category}</TableCell>
                 <TableCell>{visitor.session}</TableCell>
