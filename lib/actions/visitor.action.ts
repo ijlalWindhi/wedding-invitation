@@ -5,6 +5,7 @@ import { db } from "@/lib/firebase";
 import {
   doc,
   setDoc,
+  getDoc,
   getDocs,
   collection,
   deleteDoc,
@@ -16,6 +17,18 @@ export async function getAllVisitor() {
     const querySnapshot = await getDocs(collection(db, "visitor"));
     const visitors = querySnapshot.docs.map((doc) => doc.data());
     return visitors;
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export async function getVisitor(uuid: string) {
+  try {
+    const docRef = doc(db, "visitor", uuid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    }
   } catch (error) {
     handleError(error);
   }
