@@ -158,7 +158,9 @@ const AddVisitor = () => {
                 </TableCell>
                 <TableCell className="!text-left">{visitor.name}</TableCell>
                 <TableCell>{visitor.address}</TableCell>
-                <TableCell>{visitor.category}</TableCell>
+                <TableCell className="min-w-max w-full">
+                  {visitor.category}
+                </TableCell>
                 <TableCell>{visitor.session}</TableCell>
                 <TableCell>{visitor.numberOfVisitor}</TableCell>
                 <TableCell className="flex items-center justify-center gap-2">
