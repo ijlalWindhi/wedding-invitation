@@ -15,6 +15,10 @@ export const sessionOptions = {
     label: "Sesi 2",
     value: 2,
   },
+  Bebas: {
+    label: "Bebas",
+    value: 3,
+  },
 };
 
 export const categoryOptions = {
