@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// OPTIONS KEY
 export type sessionOptionKey = keyof typeof sessionOptions;
 export type categoryOptionKey = keyof typeof categoryOptions;
 
@@ -25,3 +26,16 @@ export const handleError = (error: unknown) => {
     throw new Error(`Unknown error: ${JSON.stringify(error)}`);
   }
 };
+
+// NUMBER PAGINATION
+export function numberPagination({
+  currentPage,
+  itemsPerPage,
+  index,
+}: {
+  currentPage: number;
+  itemsPerPage: number;
+  index: number;
+}) {
+  return (currentPage - 1) * itemsPerPage + index + 1;
+}
