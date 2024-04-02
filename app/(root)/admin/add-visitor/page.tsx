@@ -91,7 +91,7 @@ const AddVisitor = () => {
       />
     </div>
   ) : (
-    <main className="text-white p-4 flex flex-col gap-4">
+    <main className="text-white p-4 flex flex-col gap-4 font-poppins">
       <ModalAddVisitor fetchAllVisitors={fetchAllVisitors} />
       <ModalDeleteVisitor fetchAllVisitors={fetchAllVisitors} />
       <div className="flex justify-between gap-4 flex-wrap">

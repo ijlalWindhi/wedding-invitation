@@ -78,6 +78,7 @@ const config = {
       },
       fontFamily: {
         handwriting: ["Sacramento", "cursive"],
+        poppins: ["Poppins", ...fontFamily.sans],
       },
     },
   },
