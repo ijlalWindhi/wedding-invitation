@@ -1,6 +1,8 @@
 import { create } from "zustand";
 
 interface IVisitorStore {
+  visitors: VisitorData[];
+  tmpVisitors: VisitorData[];
   isOpenModal: boolean;
   isOpenModalDelete: boolean;
   selectedUuidVisitor: string;
@@ -9,9 +11,13 @@ interface IVisitorStore {
   setIsOpenModalDelete: (isOpen: boolean) => void;
   setSelectedUuidVisitor: (uuid: string) => void;
   setSelectedVisitor: (visitor: VisitorData) => void;
+  setVisitors: (visitors: VisitorData[]) => void;
+  setTmpVisitors: (visitors: VisitorData[]) => void;
 }
 
 export const useVisitorStore = create<IVisitorStore>((set) => ({
+  visitors: [],
+  tmpVisitors: [],
   isOpenModal: false,
   isOpenModalDelete: false,
   selectedUuidVisitor: "",
@@ -21,4 +27,6 @@ export const useVisitorStore = create<IVisitorStore>((set) => ({
   setSelectedUuidVisitor: (uuid: string) => set({ selectedUuidVisitor: uuid }),
   setSelectedVisitor: (visitor: VisitorData) =>
     set({ selectedVisitor: visitor }),
+  setVisitors: (visitors: VisitorData[]) => set({ visitors: visitors }),
+  setTmpVisitors: (visitors: VisitorData[]) => set({ tmpVisitors: visitors }),
 }));
