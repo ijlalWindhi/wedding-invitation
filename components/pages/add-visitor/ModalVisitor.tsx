@@ -130,7 +130,11 @@ function ModalVisitor({ fetchAllVisitors }: any) {
                     </SelectTrigger>
                     <SelectContent>
                       {Object.keys(categoryOptions).map((key) => (
-                        <SelectItem key={key} value={key}>
+                        <SelectItem
+                          className="!font-poppins"
+                          key={key}
+                          value={key}
+                        >
                           {categoryOptions[key as categoryOptionKey].label}
                         </SelectItem>
                       ))}
@@ -153,7 +157,11 @@ function ModalVisitor({ fetchAllVisitors }: any) {
                     </SelectTrigger>
                     <SelectContent>
                       {Object.keys(sessionOptions).map((key) => (
-                        <SelectItem key={key} value={key}>
+                        <SelectItem
+                          className="!font-poppins"
+                          key={key}
+                          value={key}
+                        >
                           {sessionOptions[key as sessionOptionKey].label}
                         </SelectItem>
                       ))}
