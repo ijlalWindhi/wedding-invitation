@@ -18,20 +18,30 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ModalAddVisitor from "@/components/pages/add-visitor/ModalVisitor";
 import ModalDeleteVisitor from "@/components/pages/add-visitor/ModalDeleteVisitor";
 import { getAllVisitor } from "@/lib/actions/visitor.action";
-import { numberPagination } from "@/lib/utils";
+import { numberPagination, categoryOptionKey } from "@/lib/utils";
 import { useVisitorStore } from "@/store/visitor";
 import Lottie from "react-lottie";
 import Loading from "@/public/animation/loading.json";
 import NoData from "@/public/animation/no_data.json";
+import { categoryOptions } from "@/constants";
 
 const AddVisitor = () => {
   // state & variable
   const [isGetData, setIsGetData] = useState<boolean>(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const {
     visitors,
@@ -102,11 +112,41 @@ const AddVisitor = () => {
       <ModalDeleteVisitor fetchAllVisitors={fetchAllVisitors} />
       <div className="flex justify-between gap-4 flex-wrap">
         <h1 className="font-semibold text-xl">Data Tamu Pernikahan</h1>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 w-full sm:w-1/2">
+          <Select
+            value={selectedCategory}
+            onValueChange={(value: string) => {
+              setSelectedCategory(value);
+              setSearchKeyword("");
+              const filterData = tmpVisitors.filter(
+                (visitor) =>
+                  visitor.category.toLowerCase() === value.toLowerCase() ||
+                  value === "Semua"
+              );
+              setVisitors(filterData);
+            }}
+          >
+            <SelectTrigger className="bg-secondary border-primary text-white">
+              <SelectValue placeholder="Pilih Kategori" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem className="!font-poppins" value="Semua">
+                Semua Kategori
+              </SelectItem>
+              {Object.keys(categoryOptions).map((key) => (
+                <SelectItem className="!font-poppins" key={key} value={key}>
+                  {categoryOptions[key as categoryOptionKey].label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Input
+            value={searchKeyword}
             placeholder="Cari Tamu"
             className="bg-secondary border-primary"
             onChange={(e) => {
+              setSearchKeyword(e.target.value);
+              setSelectedCategory("");
               const keyword = e.target.value.toLowerCase();
               const filterData = tmpVisitors.filter(
                 (visitor) =>
@@ -126,6 +166,10 @@ const AddVisitor = () => {
           </Button>
         </div>
       </div>
+      <h2 className="font-semibold">
+        Total Tamu :{" "}
+        {visitors.reduce((acc, cur) => acc + parseInt(cur.numberOfVisitor), 0)}
+      </h2>
       {visitors.length === 0 ? (
         <div className="w-full min-h-[85vh] flex items-center md:w-3/4 lg:w-1/2 xl:w-1/4 self-center">
           <Lottie
