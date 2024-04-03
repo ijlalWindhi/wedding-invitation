@@ -67,14 +67,16 @@ const AddVisitor = () => {
       setIsGetData(true);
       const response = await getAllVisitor();
       const data =
-        response?.map((doc) => ({
-          uuid: doc.uuid,
-          name: doc.name,
-          address: doc.address,
-          category: doc.category,
-          session: doc.session,
-          numberOfVisitor: doc.numberOfVisitor,
-        })) || [];
+        response
+          ?.sort((a, b) => a.name.localeCompare(b.name))
+          ?.map((doc) => ({
+            uuid: doc.uuid,
+            name: doc.name,
+            address: doc.address,
+            category: doc.category,
+            session: doc.session,
+            numberOfVisitor: doc.numberOfVisitor,
+          })) || [];
       setVisitors(data);
       setTmpVisitors(data);
     } catch (error) {
@@ -196,49 +198,46 @@ const AddVisitor = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {visitors
-              .slice(startIndex, endIndex)
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((visitor, index) => (
-                <TableRow key={visitor.uuid}>
-                  <TableCell>
-                    {numberPagination({ currentPage, itemsPerPage, index })}
-                  </TableCell>
-                  <TableCell className="!text-left">{visitor.name}</TableCell>
-                  <TableCell>{visitor.address}</TableCell>
-                  <TableCell className="min-w-max w-full">
-                    {visitor.category}
-                  </TableCell>
-                  <TableCell>{visitor.session}</TableCell>
-                  <TableCell>{visitor.numberOfVisitor}</TableCell>
-                  <TableCell className="flex items-center justify-center gap-2">
-                    <Link href={`/admin/add-visitor/${visitor.uuid}`}>
-                      <Button variant="outline" size="icon">
-                        <Info className="h-4 w-4" />
-                      </Button>
-                    </Link>
+            {visitors.slice(startIndex, endIndex).map((visitor, index) => (
+              <TableRow key={visitor.uuid}>
+                <TableCell>
+                  {numberPagination({ currentPage, itemsPerPage, index })}
+                </TableCell>
+                <TableCell className="!text-left">{visitor.name}</TableCell>
+                <TableCell>{visitor.address}</TableCell>
+                <TableCell className="min-w-max w-full">
+                  {visitor.category}
+                </TableCell>
+                <TableCell>{visitor.session}</TableCell>
+                <TableCell>{visitor.numberOfVisitor}</TableCell>
+                <TableCell className="flex items-center justify-center gap-2">
+                  <Link href={`/admin/add-visitor/${visitor.uuid}`}>
                     <Button variant="outline" size="icon">
-                      <Edit2
-                        className="h-4 w-4"
-                        onClick={() => {
-                          setIsOpenModal(!isOpenModal);
-                          setSelectedVisitor(visitor);
-                        }}
-                      />
+                      <Info className="h-4 w-4" />
                     </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
+                  </Link>
+                  <Button variant="outline" size="icon">
+                    <Edit2
+                      className="h-4 w-4"
                       onClick={() => {
-                        setIsOpenModalDelete(!isOpenModalDelete);
-                        setSelectedUuidVisitor(visitor.uuid);
+                        setIsOpenModal(!isOpenModal);
+                        setSelectedVisitor(visitor);
                       }}
-                    >
-                      <Trash className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => {
+                      setIsOpenModalDelete(!isOpenModalDelete);
+                      setSelectedUuidVisitor(visitor.uuid);
+                    }}
+                  >
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       )}
