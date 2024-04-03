@@ -115,7 +115,7 @@ const AddVisitor = () => {
       <ModalDeleteVisitor fetchAllVisitors={fetchAllVisitors} />
       <div className="flex justify-between gap-4 flex-wrap">
         <h1 className="font-semibold text-xl">Data Tamu Pernikahan</h1>
-        <div className="flex items-center gap-4 w-full sm:w-1/2">
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-1/2">
           <Select
             value={selectedCategory}
             onValueChange={(value: string) => {
@@ -127,6 +127,7 @@ const AddVisitor = () => {
                   value === "Semua"
               );
               setVisitors(filterData);
+              setCurrentPage(1);
             }}
           >
             <SelectTrigger className="bg-secondary border-primary text-white">
@@ -157,6 +158,7 @@ const AddVisitor = () => {
                   visitor.address.toLowerCase().includes(keyword)
               );
               setVisitors(filterData);
+              setCurrentPage(1);
             }}
           />
           <Button
