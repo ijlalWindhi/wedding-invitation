@@ -5,6 +5,7 @@ declare type VisitorData = {
   category: string;
   session: string;
   numberOfVisitor: string;
+  isCheckIn: Boolean;
 };
 
 declare type Visitors = VisitorData[];
