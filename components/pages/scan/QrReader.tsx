@@ -1,21 +1,25 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-
+import { Button } from "@/components/ui/button";
 import QrScanner from "qr-scanner";
 import QrFrame from "@/public/images/qr-frame.svg";
 import Image from "next/image";
 
-function QrReader() {
-  // QR States
+function QrReader({
+  header,
+  processFunction,
+}: {
+  header: string;
+  processFunction: (scannedResult: any) => void;
+}) {
+  // state & variable
   const scanner = useRef<QrScanner>();
   const videoEl = useRef<HTMLVideoElement>(null);
   const qrBoxEl = useRef<HTMLDivElement>(null);
   const [qrOn, setQrOn] = useState<boolean>(true);
-
-  // Result
   const [scannedResult, setScannedResult] = useState<string | undefined>("");
 
-  // Success
+  // method
   const onScanSuccess = (result: QrScanner.ScanResult) => {
     // 🖨 Print the "result" to browser console.
     console.log(result);
@@ -23,13 +27,12 @@ function QrReader() {
     // 😎 You can do whatever you want with the scanned result.
     setScannedResult(result?.data);
   };
-
-  // Fail
   const onScanFail = (err: string | Error) => {
     // 🖨 Print the "err" to browser console.
     console.log(err);
   };
 
+  // lifecycle
   useEffect(() => {
     if (videoEl?.current && !scanner.current) {
       // 👉 Instantiate the QR Scanner
@@ -71,7 +74,11 @@ function QrReader() {
       );
   }, [qrOn]);
   return (
-    <div className="qr-reader">
+    <div className="qr-reader font-poppins text-white">
+      <p className="absolute top-8 font-semibold text-lg left-1/2 transform -translate-x-1/2 z-10">
+        {header}
+      </p>
+
       {/* QR */}
       <video ref={videoEl}></video>
       <div ref={qrBoxEl} className="qr-box">
@@ -86,17 +93,17 @@ function QrReader() {
 
       {/* Show Data Result if scan is success */}
       {scannedResult && (
-        <p
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            zIndex: 99999,
-            color: "white",
-          }}
-        >
-          Scanned Result: {scannedResult}
-        </p>
+        <div className="absolute bottom-10 flex flex-col gap-5 z-10 left-1/2 transform -translate-x-1/2">
+          <p className="text-center">
+            Nama Tamu: <br />{" "}
+            <span className="font-semibold">
+              {new URLSearchParams(scannedResult).get("name")}
+            </span>
+          </p>
+          <Button className="" onClick={() => processFunction(scannedResult)}>
+            Proses Data
+          </Button>
+        </div>
       )}
     </div>
   );
