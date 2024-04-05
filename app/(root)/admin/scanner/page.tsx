@@ -8,7 +8,7 @@ function page() {
       <h1 className="font-semibold text-lg text-center">
         Silahkan Pilih Jenis Pemindai Sesuai Kebutuhan
       </h1>
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col items-center justify-center sm:flex-row gap-4">
         <Link href="/admin/scanner/souvenirs">
           <Button>
             Pindai suvenir <ScanLine className="w-5 h-5 ml-2" />
