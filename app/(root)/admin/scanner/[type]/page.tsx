@@ -2,7 +2,7 @@
 
 import QrReader from "@/components/pages/scan/QrReader";
 import { useParams } from "next/navigation";
-import { getVisitor } from "@/lib/actions/visitor.action";
+import { getVisitor, setVisitor } from "@/lib/actions/visitor.action";
 
 function ScannerType() {
   // state & variable
@@ -16,11 +16,29 @@ function ScannerType() {
       if (uuid) {
         const response = await getVisitor(uuid);
         if (response) {
-          alert(
-            `Berhasil melakukan ${
-              type == "souvenirs" ? "pengambilan suvenir" : "check-in"
-            }`
-          );
+          if (!response?.isCheckIn) {
+            let data: VisitorData = {
+              name: response.name,
+              address: response.address,
+              category: response.category,
+              session: response.session,
+              numberOfVisitor: response.numberOfVisitor,
+              uuid: response.uuid,
+              isCheckIn: true,
+            };
+            await setVisitor({
+              data,
+              path: "/admin/scanner/souvenirs",
+              uuid,
+            });
+            alert(
+              `Berhasil melakukan ${
+                type == "souvenirs" ? "pengambilan suvenir" : "check-in"
+              }`
+            );
+          } else {
+            alert("Tamu telah melakukan checkin!");
+          }
         } else {
           alert("Data tidak ditemukan!");
         }
