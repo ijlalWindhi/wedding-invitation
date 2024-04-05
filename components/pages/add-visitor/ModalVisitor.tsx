@@ -62,6 +62,7 @@ function ModalVisitor({ fetchAllVisitors }: any) {
       setIsSubmitting(true);
       const data = {
         ...values,
+        isCheckIn: false,
         uuid: selectedVisitor.uuid ? selectedVisitor.uuid : uuidv4(),
       };
       await setVisitor({ data, path: "/admin/add-visitor", uuid: data.uuid });
