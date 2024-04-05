@@ -76,6 +76,7 @@ const AddVisitor = () => {
             category: doc.category,
             session: doc.session,
             numberOfVisitor: doc.numberOfVisitor,
+            isCheckIn: doc.isCheckIn || false,
           })) || [];
       setVisitors(data);
       setTmpVisitors(data);
