@@ -104,9 +104,7 @@ function DetailVisitor() {
         <div className="flex flex-col gap-2">
           <h2 className="text-md font-medium">QR Kode</h2>
           <QrCode
-            url={`${window.location.origin}?name=${encodeURIComponent(
-              visitor.name
-            )}`}
+            url={`name=${visitor.name}&uuid=${visitor.uuid}`}
             nameFile={`QrCode_${visitor.name}`}
           />
         </div>
