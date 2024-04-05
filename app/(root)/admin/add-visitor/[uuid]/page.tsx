@@ -32,6 +32,7 @@ function DetailVisitor() {
         category: response?.category,
         session: response?.session,
         numberOfVisitor: response?.numberOfVisitor,
+        isCheckIn: response?.numberOfVisitor || false,
       });
     } catch (error) {
       console.log(error);
