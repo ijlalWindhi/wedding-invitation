@@ -16,12 +16,16 @@ function ScannerType() {
       if (uuid) {
         const response = await getVisitor(uuid);
         if (response) {
-          alert("data berhasil ditambahkan");
+          alert(
+            `Berhasil melakukan ${
+              type == "souvenirs" ? "pengambilan suvenir" : "check-in"
+            }`
+          );
         } else {
-          alert("data tidak ditemukan");
+          alert("Data tidak ditemukan!");
         }
       } else {
-        alert("data tidak ditemukan");
+        alert("QR code tidak sesuai!");
       }
     } catch (error) {
       console.log(error);
@@ -30,7 +34,7 @@ function ScannerType() {
   return (
     <main>
       <QrReader
-        header={`Pemindai ${type == "souvenir" ? "Suvenir" : "Tamu"}`}
+        header={`Pemindai ${type == "souvenirs" ? "Suvenir" : "Tamu"}`}
         processFunction={processHandler}
       />
     </main>
