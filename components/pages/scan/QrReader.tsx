@@ -97,7 +97,7 @@ function QrReader({
           <p className="text-center">
             Nama Tamu: <br />{" "}
             <span className="font-semibold">
-              {new URLSearchParams(scannedResult).get("name")}
+              {new URLSearchParams(scannedResult).get("name") || "-"}
             </span>
           </p>
           <Button className="" onClick={() => processFunction(scannedResult)}>
