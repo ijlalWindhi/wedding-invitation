@@ -93,7 +93,7 @@ function DetailVisitor() {
             onClick={() => {
               setIsCopy(true);
               navigator.clipboard.writeText(
-                `${window.location.origin}?name=${encodeURIComponent(
+                `https://sherly-rizki.ijlaldhisa.my.id/?to=${encodeURIComponent(
                   visitor.name
                 )}`
               );
