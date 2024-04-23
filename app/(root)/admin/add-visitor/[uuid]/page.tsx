@@ -95,7 +95,7 @@ function DetailVisitor() {
               navigator.clipboard.writeText(
                 `https://sherly-rizki.ijlaldhisa.my.id/?to=${encodeURIComponent(
                   visitor.name
-                )}`
+                )}&uuid=${visitor.uuid}`
               );
             }}
           >
