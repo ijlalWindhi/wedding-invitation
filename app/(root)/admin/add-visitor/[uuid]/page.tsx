@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import Lottie from "react-lottie";
-import { ChevronLeft } from "lucide-react";
-import Loading from "@/public/animation/loading.json";
-import { getVisitor } from "@/lib/actions/visitor.action";
-import { useVisitorStore } from "@/store/visitor";
-import { Button } from "@/components/ui/button";
-import QrCode from "@/components/pages/detail-visitor/QrCode";
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import Lottie from 'react-lottie';
+import { ChevronLeft } from 'lucide-react';
+import Loading from '@/public/animation/loading.json';
+import { getVisitor } from '@/lib/actions/visitor.action';
+import { useVisitorStore } from '@/store/visitor';
+import { Button } from '@/components/ui/button';
+import QrCode from '@/components/pages/detail-visitor/QrCode';
 
 function DetailVisitor() {
   // state & variable
@@ -23,7 +23,7 @@ function DetailVisitor() {
     try {
       setIsGetData(true);
       const response = await getVisitor(
-        typeof uuid === "string" ? uuid : uuid[0]
+        typeof uuid === 'string' ? uuid : uuid[0],
       );
       setVisitor({
         uuid: response?.uuid,
@@ -33,6 +33,7 @@ function DetailVisitor() {
         session: response?.session,
         numberOfVisitor: response?.numberOfVisitor,
         isCheckIn: response?.numberOfVisitor || false,
+        arePresent: response?.arePresent,
       });
     } catch (error) {
       console.log(error);
@@ -88,18 +89,24 @@ function DetailVisitor() {
           <p className="border rounded-md p-2">{visitor.numberOfVisitor}</p>
         </div>
         <div className="flex flex-col gap-2">
+          <h2 className="text-md font-medium">Status Kehadiran</h2>
+          <p className="border rounded-md p-2">
+            {visitor?.arePresent ? 'Hadir' : 'Tidak Hadir'}
+          </p>
+        </div>
+        <div className="flex flex-col gap-2">
           <h2 className="text-md font-medium">Tautan Undangan</h2>
           <Button
             onClick={() => {
               setIsCopy(true);
               navigator.clipboard.writeText(
                 `https://sherly-rizki.ijlaldhisa.my.id/?to=${encodeURIComponent(
-                  visitor.name
-                )}&uuid=${visitor.uuid}`
+                  visitor.name,
+                )}&uuid=${visitor.uuid}`,
               );
             }}
           >
-            {isCopy ? "Tautan Berhasil Disalin" : "Salin Tautan Undangan"}
+            {isCopy ? 'Tautan Berhasil Disalin' : 'Salin Tautan Undangan'}
           </Button>
         </div>
         <div className="flex flex-col gap-2">

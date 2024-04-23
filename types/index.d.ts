@@ -6,6 +6,7 @@ declare type VisitorData = {
   session: string;
   numberOfVisitor: string;
   isCheckIn: Boolean;
+  arePresent?: boolean;
 };
 
 declare type Visitors = VisitorData[];
