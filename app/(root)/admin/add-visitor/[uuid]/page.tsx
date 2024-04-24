@@ -91,7 +91,11 @@ function DetailVisitor() {
         <div className="flex flex-col gap-2">
           <h2 className="text-md font-medium">Status Kehadiran</h2>
           <p className="border rounded-md p-2">
-            {visitor?.arePresent ? 'Hadir' : 'Tidak Hadir'}
+            {visitor?.arePresent === undefined
+              ? '-'
+              : visitor.arePresent
+              ? 'Hadir'
+              : 'Tidak Hadir'}
           </p>
         </div>
         <div className="flex flex-col gap-2">
